@@ -39669,14 +39669,7 @@ return /******/ (function(modules) { // webpackBootstrap
     }, {
       key: '_setLevelDirected',
       value: function _setLevelDirected(level, node) {
-		if(node.labelModule.lines)
-		{
-			console.log("Set Level: " + node.labelModule.lines[0]);
-		}
-		else
-		{
-			console.log("Set Level: ???");
-		}
+		console.log("Set Level: " + node.options.label);
 		if (this.hierarchicalLevels[node.id])
 		{
 			console.log("  Existing: " + this.hierarchicalLevels[node.id]);
