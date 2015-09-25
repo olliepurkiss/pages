@@ -39669,6 +39669,15 @@ return /******/ (function(modules) { // webpackBootstrap
     }, {
       key: '_setLevelDirected',
       value: function _setLevelDirected(level, node) {
+		console.log("Set Level: " + node.labelModule.lines[0]);
+		if (this.hierarchicalLevels[node.id])
+		{	
+			console.log("  Existing: " + this.hierarchicalLevels[node.id]);
+		}
+		else
+		{
+			console.log("  New: " + level);
+		}
         if (this.hierarchicalLevels[node.id] !== undefined) return;
 
         var childNode = undefined;
