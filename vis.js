@@ -39669,6 +39669,7 @@ return /******/ (function(modules) { // webpackBootstrap
     }, {
       key: '_setLevelDirected',
       value: function _setLevelDirected(level, node) {
+		console.log(node)
 		if(node.labelModule.lines)
 		{
 			console.log("Set Level: " + node.labelModule.lines[0]);
