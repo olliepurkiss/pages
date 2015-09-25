@@ -39633,29 +39633,27 @@ return /******/ (function(modules) { // webpackBootstrap
       value: function _determineLevelsDirected() {
         var nodeId = undefined,
             node = undefined;
-        var minLevel = 10000;
 
-        // set first node to source
+		// find all the root nodes
         for (nodeId in this.body.nodes) {
           if (this.body.nodes.hasOwnProperty(nodeId)) {
             node = this.body.nodes[nodeId];
-            this._setLevelDirected(minLevel, node);
+			if(this._isRootNode(node)) {
+				this._setLevelDirected(0, node);
+			}
           }
         }
+      }
 
-        // get the minimum level
-        for (nodeId in this.body.nodes) {
-          if (this.body.nodes.hasOwnProperty(nodeId)) {
-            minLevel = this.hierarchicalLevels[nodeId] < minLevel ? this.hierarchicalLevels[nodeId] : minLevel;
+    }, {
+      key: '_isRootNode',
+      value: function _isRootNode(node) {
+        for (var i = 0; i < node.edges.length; i++) {
+          if (node.edges[i].toId === node.id) {
+			  return false;
           }
         }
-
-        // subtract the minimum from the set so we have a range starting from 0
-        for (nodeId in this.body.nodes) {
-          if (this.body.nodes.hasOwnProperty(nodeId)) {
-            this.hierarchicalLevels[nodeId] -= minLevel;
-          }
-        }
+		return true;
       }
 
       /**
@@ -39669,25 +39667,14 @@ return /******/ (function(modules) { // webpackBootstrap
     }, {
       key: '_setLevelDirected',
       value: function _setLevelDirected(level, node) {
-		console.log("Set Level: " + node.options.label);
-		if (this.hierarchicalLevels[node.id])
-		{
-			console.log("  Existing: " + this.hierarchicalLevels[node.id]);
+		var currentLevel = this.hierarchicalLevels[node.id];
+        if ((currentLevel === undefined) || (currentLevel < level)) {
+			this.hierarchicalLevels[node.id] = level;
 		}
-		else
-		{
-			console.log("  New: " + level);
-		}
-        if (this.hierarchicalLevels[node.id] !== undefined) return;
 
         var childNode = undefined;
-        this.hierarchicalLevels[node.id] = level;
-
         for (var i = 0; i < node.edges.length; i++) {
-          if (node.edges[i].toId === node.id) {
-            childNode = node.edges[i].from;
-            this._setLevelDirected(level - 1, childNode);
-          } else {
+          if (node.edges[i].fromId === node.id) {
             childNode = node.edges[i].to;
             this._setLevelDirected(level + 1, childNode);
           }
