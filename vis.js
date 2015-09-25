@@ -39634,13 +39634,13 @@ return /******/ (function(modules) { // webpackBootstrap
         var nodeId = undefined,
             node = undefined;
 
-		// find all the root nodes
+        // find all the root nodes
         for (nodeId in this.body.nodes) {
           if (this.body.nodes.hasOwnProperty(nodeId)) {
             node = this.body.nodes[nodeId];
-			if(this._isRootNode(node)) {
-				this._setLevelDirected(0, node);
-			}
+            if(this._isRootNode(node)) {
+              this._setLevelDirected(0, node);
+            }
           }
         }
       }
@@ -39650,10 +39650,10 @@ return /******/ (function(modules) { // webpackBootstrap
       value: function _isRootNode(node) {
         for (var i = 0; i < node.edges.length; i++) {
           if (node.edges[i].toId === node.id) {
-			  return false;
+            return false;
           }
         }
-		return true;
+        return true;
       }
 
       /**
@@ -39667,16 +39667,15 @@ return /******/ (function(modules) { // webpackBootstrap
     }, {
       key: '_setLevelDirected',
       value: function _setLevelDirected(level, node) {
-		var currentLevel = this.hierarchicalLevels[node.id];
+        var currentLevel = this.hierarchicalLevels[node.id];
         if ((currentLevel === undefined) || (currentLevel < level)) {
-			this.hierarchicalLevels[node.id] = level;
-		}
-
-        var childNode = undefined;
-        for (var i = 0; i < node.edges.length; i++) {
-          if (node.edges[i].fromId === node.id) {
-            childNode = node.edges[i].to;
-            this._setLevelDirected(level + 1, childNode);
+          this.hierarchicalLevels[node.id] = level;
+          var childNode = undefined;
+          for (var i = 0; i < node.edges.length; i++) {
+            if (node.edges[i].fromId === node.id) {
+              childNode = node.edges[i].to;
+              this._setLevelDirected(level + 1, childNode);
+            }
           }
         }
       }
